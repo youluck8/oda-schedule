@@ -68,19 +68,6 @@ async function fetchSchedule() {
   return parsed;
 }
 
-function renderBanner() {
-  const banner = document.getElementById('status-banner');
-  const today = new Date();
-  const current = entries.find(e => dayInRange(today, e.start, e.end));
-  if (current) {
-    banner.textContent = `現在(${fmtDate(today)}時点): ${current.place} にいます${current.memo ? '（' + current.memo + '）' : ''}`;
-    banner.className = 'status-banner ' + PLACE_CLASS[current.place];
-  } else {
-    banner.textContent = `現在(${fmtDate(today)}時点): 予定の登録がありません`;
-    banner.className = 'status-banner';
-  }
-}
-
 function renderCalendar() {
   const grid = document.getElementById('calGrid');
   const title = document.getElementById('calTitle');
@@ -111,8 +98,23 @@ function renderCalendar() {
     const match = entries.find(e => dayInRange(day, e.start, e.end));
     const el = document.createElement('div');
     el.className = 'cal-day' + (match ? ' ' + PLACE_CLASS[match.place] : '') + (sameDay(day, today) ? ' today' : '');
-    el.textContent = d;
-    if (match) el.title = match.place + (match.memo ? '：' + match.memo : '');
+
+    const num = document.createElement('span');
+    num.className = 'cal-day-num';
+    num.textContent = d;
+    el.appendChild(num);
+
+    if (match) {
+      el.title = match.place + (match.memo ? '：' + match.memo : '');
+      const isRangeStart = sameDay(day, match.start);
+      const isWeekStart = day.getDay() === 0;
+      if ((isRangeStart || isWeekStart) && match.memo) {
+        const label = document.createElement('span');
+        label.className = 'cal-day-label';
+        label.textContent = (isRangeStart ? '' : '→ ') + match.memo;
+        el.appendChild(label);
+      }
+    }
     grid.appendChild(el);
   }
 }
@@ -147,13 +149,12 @@ function renderTable() {
 async function refresh() {
   try {
     entries = await fetchSchedule();
-    renderBanner();
     renderCalendar();
     renderTable();
     document.getElementById('updated').textContent = `最終更新: ${new Date().toLocaleTimeString('ja-JP')}`;
   } catch (err) {
     if (entries.length === 0) {
-      document.getElementById('status-banner').textContent = 'データの取得に失敗しました。スプレッドシートの共有設定をご確認ください。';
+      document.getElementById('updated').textContent = 'データの取得に失敗しました。スプレッドシートの共有設定をご確認ください。';
     }
     console.error(err);
   }
