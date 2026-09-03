@@ -87,7 +87,6 @@ header h1 {
   font-size: 13px;
   border-radius: 8px;
   position: relative;
-  overflow: hidden;
 }
 
 .cal-day.empty { visibility: hidden; }
@@ -95,6 +94,31 @@ header h1 {
 .cal-day.today .cal-day-num { font-weight: 700; }
 .cal-day.tokyo { background: var(--tokyo-bg); color: #1D4ED8; }
 .cal-day.miyako { background: var(--miyako-bg); color: #047857; }
+
+/* 複数日にまたがる予定を横につなぐコネクタ・矢印 */
+.cal-day.conn-right::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  right: -4px;
+  width: 8px;
+  height: 3px;
+  background: currentColor;
+  z-index: 1;
+}
+
+.cal-day.conn-end::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: -8px;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 7px solid currentColor;
+  z-index: 2;
+}
 
 .cal-day-num { align-self: center; }
 
@@ -113,6 +137,8 @@ header h1 {
 @media (min-width: 480px) {
   .cal-day { min-height: 64px; padding: 6px 5px; }
   .cal-day-label { font-size: 10px; }
+  .cal-day.conn-right::after { top: 17px; }
+  .cal-day.conn-end::after { top: 14px; }
 }
 
 .legend {

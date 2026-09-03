@@ -93,21 +93,36 @@ function renderCalendar() {
     grid.appendChild(el);
   }
 
+  const days = [];
   for (let d = 1; d <= lastDay.getDate(); d++) {
     const day = new Date(calCursor.getFullYear(), calCursor.getMonth(), d);
     const match = entries.find(e => dayInRange(day, e.start, e.end));
+    days.push({ day, match, dow: day.getDay() });
+  }
+
+  days.forEach((info, idx) => {
+    const { day, match, dow } = info;
+    const next = days[idx + 1];
+    const connRight = !!(match && next && next.match === match && dow !== 6);
+    const prev = days[idx - 1];
+    const connLeft = !!(match && prev && prev.match === match && prev.dow !== 6);
+
     const el = document.createElement('div');
-    el.className = 'cal-day' + (match ? ' ' + PLACE_CLASS[match.place] : '') + (sameDay(day, today) ? ' today' : '');
+    el.className = 'cal-day'
+      + (match ? ' ' + PLACE_CLASS[match.place] : '')
+      + (sameDay(day, today) ? ' today' : '')
+      + (connRight ? ' conn-right' : '')
+      + (connLeft && !connRight ? ' conn-end' : '');
 
     const num = document.createElement('span');
     num.className = 'cal-day-num';
-    num.textContent = d;
+    num.textContent = day.getDate();
     el.appendChild(num);
 
     if (match) {
       el.title = match.place + (match.memo ? '：' + match.memo : '');
       const isRangeStart = sameDay(day, match.start);
-      const isWeekStart = day.getDay() === 0;
+      const isWeekStart = dow === 0;
       if ((isRangeStart || isWeekStart) && match.memo) {
         const label = document.createElement('span');
         label.className = 'cal-day-label';
@@ -116,7 +131,7 @@ function renderCalendar() {
       }
     }
     grid.appendChild(el);
-  }
+  });
 }
 
 function renderTable() {
