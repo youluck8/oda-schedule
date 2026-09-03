@@ -1,0 +1,164 @@
+:root {
+  --tokyo: #3B82F6;
+  --tokyo-bg: #EFF6FF;
+  --miyako: #10B981;
+  --miyako-bg: #ECFDF5;
+  --ink: #1F2937;
+  --muted: #6B7280;
+  --border: #E5E7EB;
+  --bg: #F9FAFB;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+header h1 {
+  font-size: 20px;
+  margin: 0 0 4px;
+}
+
+.updated {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 20px;
+}
+
+.status-banner {
+  padding: 18px 20px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  background: #F3F4F6;
+  color: var(--ink);
+}
+
+.status-banner.tokyo { background: var(--tokyo-bg); color: #1D4ED8; }
+.status-banner.miyako { background: var(--miyako-bg); color: #047857; }
+
+.calendar-section {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cal-nav h2 {
+  font-size: 15px;
+  margin: 0;
+}
+
+.cal-nav button {
+  border: none;
+  background: none;
+  font-size: 16px;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px 10px;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cal-dow {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  padding-bottom: 4px;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.cal-day.empty { visibility: hidden; }
+.cal-day.today { box-shadow: inset 0 0 0 2px var(--ink); font-weight: 700; }
+.cal-day.tokyo { background: var(--tokyo-bg); color: #1D4ED8; }
+.cal-day.miyako { background: var(--miyako-bg); color: #047857; }
+
+.legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.legend-item { display: flex; align-items: center; gap: 6px; }
+
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot-tokyo { background: var(--tokyo); }
+.dot-miyako { background: var(--miyako); }
+
+.table-section h2 {
+  font-size: 15px;
+  margin: 0 0 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: #F3F4F6;
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+tr:last-child td { border-bottom: none; }
+
+tr.current-row td { background: #FFFBEB; font-weight: 600; }
+tr.past-row td { color: var(--muted); }
+
+.place-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.place-badge.tokyo { background: var(--tokyo-bg); color: #1D4ED8; }
+.place-badge.miyako { background: var(--miyako-bg); color: #047857; }

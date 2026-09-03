@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>織田さん 所在地スケジュール</title>
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>織田さん 所在地スケジュール</h1>
+      <p class="updated" id="updated">読み込み中...</p>
+    </header>
+
+    <section id="status-banner" class="status-banner">読み込み中...</section>
+
+    <section class="calendar-section">
+      <div class="cal-nav">
+        <button id="prevMonth">◀</button>
+        <h2 id="calTitle"></h2>
+        <button id="nextMonth">▶</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="legend">
+        <span class="legend-item"><span class="dot dot-tokyo"></span>東京</span>
+        <span class="legend-item"><span class="dot dot-miyako"></span>宮古島</span>
+      </div>
+    </section>
+
+    <section class="table-section">
+      <h2>スケジュール一覧</h2>
+      <table id="scheduleTable">
+        <thead>
+          <tr><th>開始日</th><th>終了日</th><th>場所</th><th>メモ</th></tr>
+        </thead>
+        <tbody id="scheduleBody">
+          <tr><td colspan="4">読み込み中...</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="script.js?v=1"></script>
+</body>
+</html>
