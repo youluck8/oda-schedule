@@ -124,7 +124,9 @@ header h1 {
 
 .cal-day-label {
   display: block;
+  align-self: stretch;
   width: 100%;
+  min-width: 0;
   margin-top: 3px;
   font-size: 9px;
   line-height: 1.2;
